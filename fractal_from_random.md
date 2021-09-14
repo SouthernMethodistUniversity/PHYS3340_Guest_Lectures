@@ -6,9 +6,9 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.10.3
+      jupytext_version: 1.12.0
   kernelspec:
-    display_name: Python 3
+    display_name: Python 3 (ipykernel)
     language: python
     name: python3
 ---
@@ -49,7 +49,7 @@ def placeStartpoint(npts,fixedpts):
 def choosePts(npts,fixedpts,frac):
     #chooses a vertex at random
     #further rules could be applied here
-    roll = floor(npts*np.random.random())
+    roll = np.floor(npts*np.random.random())
     point = fixedpts[int(roll)]
     
     return point
@@ -74,16 +74,17 @@ def plotFractal(start,fixedpts,ittpts):
     # set axes range
     plt.xlim(-0.05,1.05)
     plt.ylim(-0.05,1.05)
-    
-    plt.axes().set_aspect('equal')
+    plt.axis('equal')
     
     #plots the verticies
-    plt.scatter(transpose(fixedpts)[0],transpose(fixedpts)[1],alpha=0.8, c='black', edgecolors='none', s=30)
+    plt.scatter(np.transpose(fixedpts)[0],np.transpose(fixedpts)[1],alpha=0.8, c='black', edgecolors='none', s=30)
     #plots the starting point
     plt.scatter(start[0],start[1],alpha=0.8, c='red', edgecolors='none', s=30)    
     #plots the itterated points
-    plt.scatter(transpose(ittpts)[0],transpose(ittpts)[1],alpha=0.5, c='blue', edgecolors='none', s=2)
+    plt.scatter(np.transpose(ittpts)[0],np.transpose(ittpts)[1],alpha=0.5, c='blue', edgecolors='none', s=2)
     
+    
+    plt.show()
     return
 ```
 
@@ -101,13 +102,13 @@ def GenerateFractal(npts,frac,itt,reg=False):
         fixedpts = [] #Random Verticies
     else:
         if npts == 3:
-            fixedpts = [(0.0,0.0),(1.0,0.0),(0.5,0.5*sqrt(3.0))] #Equilateral Triangle (npts = 3)
+            fixedpts = [(0.0,0.0),(1.0,0.0),(0.5,0.5*np.sqrt(3.0))] #Equilateral Triangle (npts = 3)
         elif npts == 4:
             fixedpts = [(0.0,0.0),(1.0,0.0),(1.0,1.0),(0.0,1.0)] #Square
         elif npts == 5:
-            fixedpts = [(0.0,2./(1+sqrt(5.))),(0.5-2./(5+sqrt(5.)),0.0),(0.5,1.0),(0.5+2./(5+sqrt(5.)),0.0),(1.0,2./(1+sqrt(5.)))] #Regular Pentagon
+            fixedpts = [(0.0,2./(1+np.sqrt(5.))),(0.5-2./(5+np.sqrt(5.)),0.0),(0.5,1.0),(0.5+2./(5+np.sqrt(5.)),0.0),(1.0,2./(1+np.sqrt(5.)))] #Regular Pentagon
         elif npts == 6:
-            fixedpts = [(0.0,0.5),(1./4,0.5+.25*sqrt(3.)),(3./4,0.5+.25*sqrt(3.)),(1.0,0.5),(3./4,0.5-.25*sqrt(3.)),(1./4,0.5-.25*sqrt(3.))] #Regular Hexagon
+            fixedpts = [(0.0,0.5),(1./4,0.5+.25*np.sqrt(3.)),(3./4,0.5+.25*np.sqrt(3.)),(1.0,0.5),(3./4,0.5-.25*np.sqrt(3.)),(1./4,0.5-.25*np.sqrt(3.))] #Regular Hexagon
         elif npts == 2:
             fixedpts = [(0.0,0.0),(1.0,1.0)] #Line
         elif npts == 1:
@@ -129,7 +130,7 @@ def GenerateFractal(npts,frac,itt,reg=False):
         print("The number of verticies don't match the length of the list of verticies. If you want the verticies generated at random, set fixedpts to []")
         return
     if len(fixedpts) != 0:
-        print("Fractal Dimension = {}".format(-log(npts)/log(frac)))
+        print("Fractal Dimension = {}".format(-np.log(npts)/np.log(frac)))
     
         
     (start, fixedpts) = placeStartpoint(npts,fixedpts)
@@ -246,11 +247,11 @@ def makeFern(f,itt):
                 xypts.append((x,y))
             cond = cond + f[j][0]
             
-    xmax,ymax = max(abs(transpose(xypts)[0])),max(abs(transpose(xypts)[1]))
+    xmax,ymax = max(abs(np.transpose(xypts)[0])),max(abs(np.transpose(xypts)[1]))
     plt.axes().set_aspect('equal')
-    color = transpose([[abs(r)/xmax for r in transpose(xypts)[0]],[abs(g)/ymax for g in transpose(xypts)[1]],[b/itt for b in range(itt)]])
+    color = np.transpose([[abs(r)/xmax for r in np.transpose(xypts)[0]],[abs(g)/ymax for g in np.transpose(xypts)[1]],[b/itt for b in range(itt)]])
     
-    plt.scatter(transpose(xypts)[0],transpose(xypts)[1],alpha=0.5, facecolors=color, edgecolors='none', s=1)
+    plt.scatter(np.transpose(xypts)[0],np.transpose(xypts)[1],alpha=0.5, facecolors=color, edgecolors='none', s=1)
     
 ```
 
@@ -276,5 +277,9 @@ makeFern(f,5000)
 ```
 
 ```python tags=[]
+
+```
+
+```python
 
 ```
