@@ -14,14 +14,13 @@ jupyter:
 ---
 
 ```python jupyter={"outputs_hidden": false}
-import pickle,glob
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-```
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 
-```python jupyter={"outputs_hidden": false}
-%pylab inline
+%config InlineBackend.figure_format ='retina'
 ```
 
 # Generating Fractal From Random Points - The Chaos Game
@@ -46,7 +45,7 @@ def placeStartpoint(npts,fixedpts):
         
 ```
 
-```python jupyter={"outputs_hidden": true}
+```python
 def choosePts(npts,fixedpts,frac):
     #chooses a vertex at random
     #further rules could be applied here
@@ -92,10 +91,10 @@ def plotFractal(start,fixedpts,ittpts):
 def GenerateFractal(npts,frac,itt,reg=False):
     #Error Control
     if npts < 1 or frac >= 1.0 or frac <= 0.0 or type(npts) is not int or type(frac) is not float or type(itt) is not int:
-        print "number of points must be a positive integer, compression fraction must be a positive float less than 1.0, itt must be a positive integer"
+        print("number of points must be a positive integer, compression fraction must be a positive float less than 1.0, itt must be a positive integer")
         return
     if frac > 0.5:
-        print "Warning: compression fractions over 1/2 do not lead to fractals"
+        print("Warning: compression fractions over 1/2 do not lead to fractals")
 
     #Initilize Verticies
     if not reg:
@@ -116,7 +115,7 @@ def GenerateFractal(npts,frac,itt,reg=False):
         elif npts == 8:
             fixedpts = [(0.0,0.0),(1.0,0.0),(1.0,1.0),(0.0,1.0),(0.5,0.0),(1.0,0.5),(0.5,1.0),(0.0,0.5)] #Carpet
         else:
-            print "No regular polygon stored with that many verticies, switching to default with randomly assigned verticies"
+            print("No regular polygon stored with that many verticies, switching to default with randomly assigned verticies")
             fixedpts = [] #Random Verticies
 
     #Compression Fraction
@@ -127,10 +126,10 @@ def GenerateFractal(npts,frac,itt,reg=False):
 
         
     if len(fixedpts) != npts and len(fixedpts) != 0:
-        print "The number of verticies don't match the length of the list of verticies. If you want the verticies generated at random, set fixedpts to []"
+        print("The number of verticies don't match the length of the list of verticies. If you want the verticies generated at random, set fixedpts to []")
         return
     if len(fixedpts) != 0:
-        print "Fractal Dimension = {}".format(-log(npts)/log(frac))
+        print("Fractal Dimension = {}".format(-log(npts)/log(frac)))
     
         
     (start, fixedpts) = placeStartpoint(npts,fixedpts)
@@ -227,15 +226,15 @@ GenerateFractal(100,.5,100000)
 
 ## Modeling Life
 
-```python jupyter={"outputs_hidden": true}
+```python
 def makeFern(f,itt):            
     colname = ["percent","a","b","c","d","e","f"]
-    print pd.DataFrame(data=np.array(f), columns = colname)
+    print(pd.DataFrame(data=np.array(f), columns = colname))
     
     x,y = {0.5,0.0}
     xypts=[]
     if abs(sum(f[j][0] for j in range(len(f)))-1.0) < 10^-10:
-        print "Probabilities must sum to 1"
+        print("Probabilities must sum to 1")
         return
     for i in range(itt):
         rand = (np.random.random())
@@ -276,6 +275,6 @@ f = ((0.01,0.0,0.0,0.0,0.16,0.0,0.0),
 makeFern(f,5000)
 ```
 
-```python jupyter={"outputs_hidden": true}
+```python tags=[]
 
 ```
