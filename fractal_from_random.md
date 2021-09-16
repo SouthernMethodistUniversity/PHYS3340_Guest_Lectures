@@ -26,7 +26,17 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 # Generating Fractal From Random Points - The Chaos Game
 
 
+This notebook details how to generate fractals from random points.
+
+To get started, checkout this video by [Numberphile](https://www.youtube.com/watch?v=kbKtFN71Lfs)
+
+
 ## Initial Definitions
+
+
+The goal of this exercise is to break down the individual steps of the procedure into functions.
+
+To start we generate a list of points that represent our starting point and our verticies.
 
 ```python jupyter={"outputs_hidden": false}
 def placeStartpoint(npts,fixedpts):
@@ -45,6 +55,8 @@ def placeStartpoint(npts,fixedpts):
         
 ```
 
+Next we build our point chooser which will select a random vertex.
+
 ```python
 def choosePts(npts,fixedpts,frac):
     #chooses a vertex at random
@@ -54,6 +66,8 @@ def choosePts(npts,fixedpts,frac):
     
     return point
 ```
+
+Then we iterate on our points.
 
 ```python jupyter={"outputs_hidden": false}
 def placeItteratePts(npts,itt,start,fixedpts,frac):
@@ -69,6 +83,8 @@ def placeItteratePts(npts,itt,start,fixedpts,frac):
     return ittpts
 ```
 
+Lastly, we need to plot all of our points.
+
 ```python jupyter={"outputs_hidden": false}
 def plotFractal(start,fixedpts,ittpts):
     # set axes range
@@ -83,10 +99,14 @@ def plotFractal(start,fixedpts,ittpts):
     #plots the itterated points
     plt.scatter(np.transpose(ittpts)[0],np.transpose(ittpts)[1],alpha=0.5, c='blue', edgecolors='none', s=2)
     
-    
     plt.show()
     return
 ```
+
+## Generate Fractal
+
+
+Once we have all of our functions, we can build a central function that calls everything we might need to generate an image.
 
 ```python jupyter={"outputs_hidden": false}
 def GenerateFractal(npts,frac,itt,reg=False):
@@ -154,6 +174,9 @@ GenerateFractal(3,.5,5000)
 
 #### Regular Polygons
 
+
+There are some famous fractals that can be generated this way that are rooted in regular polygons. These are often named after the Polish mathematician Waclaw Sierpinski but have existed long before he categorized them. For example [Sierpinski's Triangle](https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle) and [Sierpinski's Carpet](https://en.wikipedia.org/wiki/Sierpi%C5%84ski_carpet).
+
 ```python jupyter={"outputs_hidden": false}
 GenerateFractal(3,.5,50000,True)
 ```
@@ -174,6 +197,10 @@ GenerateFractal(8,1./3.,50000,True)
 #### Exploring Further: Dimension
 <!-- #endregion -->
 
+Fractals have, by definition, [fractional dimension](https://en.wikipedia.org/wiki/Fractal_dimension). We can model what that means here.
+
+Roughly, fractional dimension is a measure of how much space a fractal fills and in our case will fall between 1 (a line) and 2 (a plane)
+
 ```python hidden=true jupyter={"outputs_hidden": false}
 GenerateFractal(1,.5,50000,True)
 ```
@@ -189,6 +216,10 @@ GenerateFractal(4,.5,50000,True)
 <!-- #region heading_collapsed=true -->
 #### Randomness on Large Scales
 <!-- #endregion -->
+
+To explore the nature of randomness, we can use our same function but increase the number of verticies that are randomly generated to a significantly large number.
+
+This is an example of a [Monte Carlo method](https://en.wikipedia.org/wiki/Monte_Carlo_method).
 
 ```python hidden=true jupyter={"outputs_hidden": false}
 GenerateFractal(10,.5,100)
@@ -227,6 +258,9 @@ GenerateFractal(100,.5,100000)
 
 ## Modeling Life
 
+
+There are many examples of fractals in nature. Here we have generated a fern. If we use the specific values below this is known as [Barnsley's Fern](https://en.wikipedia.org/wiki/Barnsley_fern).
+
 ```python
 def makeFern(f,itt):            
     colname = ["percent","a","b","c","d","e","f"]
@@ -258,8 +292,8 @@ def makeFern(f,itt):
 #### For Barnsley's Fern:
 Use the following values
 
-|Percent|A|B|C|D|E|F|
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|__Percent__|__A__|__B__|__C__|__D__|__E__|__F__|
+|---|---|---|---|---|---|---|
 |0.01|0.0|0.0|0.0|0.16|0.0|0.0|
 |0.85|0.85|0.04|-0.04|0.85|0.0|1.60|
 |0.07|0.20|-0.26|0.23|0.22|0.0|1.60|
