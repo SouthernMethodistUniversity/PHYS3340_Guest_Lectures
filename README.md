@@ -60,7 +60,6 @@ conda env create -f environment.yml --force
 
 ## Working on Notebooks
 
-1. Browser into "code" directory.
 1. Right-click on a notebook and select "Copy".
 2. Browse into your "work" directory.
 3. Right-click with the directory and select "Paste".
